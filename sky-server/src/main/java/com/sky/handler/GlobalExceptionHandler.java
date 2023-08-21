@@ -1,10 +1,17 @@
 package com.sky.handler;
 
 import com.sky.constant.MessageConstant;
+import com.sky.dto.EmployeeDTO;
+import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.exception.BaseException;
+import com.sky.result.PageResult;
 import com.sky.result.Result;
+import com.sky.service.EmployeeService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.swing.*;
@@ -23,13 +30,13 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler
-    public Result exceptionHandler(BaseException ex){
+    public Result<T> exceptionHandler(BaseException ex){
         log.error("异常信息：{}", ex.getMessage());
         return Result.error(ex.getMessage());
     }
 
     @ExceptionHandler
-    public Result exceptionHandler(SQLIntegrityConstraintViolationException ex){
+    public Result<T> exceptionHandler(SQLIntegrityConstraintViolationException ex){
         String msg = ex.getMessage();
         if (msg.contains("Duplicate entry")){
 
@@ -42,5 +49,8 @@ public class GlobalExceptionHandler {
             return Result.error(MessageConstant.UNKNOWN_ERROR);
         }
     }
+
+
+
 
 }
