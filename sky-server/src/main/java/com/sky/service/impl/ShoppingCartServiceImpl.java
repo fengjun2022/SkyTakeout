@@ -89,4 +89,12 @@ if (list != null && list.size() >0){
         List<ShoppingCart> list =  shoppingCartMapper.list(shoppingCart);
         return list;
     }
+
+    @Override
+    public void clean() {
+        Long userId = BaseContext.getCurrentId();
+        System.out.println("用户id"+userId);
+        shoppingCartMapper.delete(userId);
+
+    }
 }
